@@ -96,7 +96,7 @@ export default function ReportForm() {
             name="title"
             required
             placeholder="e.g., Need rice and cooking oil"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none"
           />
         </div>
 
@@ -107,7 +107,7 @@ export default function ReportForm() {
               id="category"
               name="category"
               required
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none appearance-none bg-white"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none appearance-none bg-white"
             >
               <option value="" disabled selected>Select a category</option>
               <option value="FOOD">Food & Water</option>
@@ -131,7 +131,7 @@ export default function ReportForm() {
             required
             rows={4}
             placeholder="Describe the situation in detail..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none resize-none"
           ></textarea>
         </div>
 
