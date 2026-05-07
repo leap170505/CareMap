@@ -2,34 +2,36 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, LogIn, AlertCircle } from "lucide-react";
+import { Lock, Mail, UserPlus, AlertCircle, User } from "lucide-react";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       if (res.ok) {
-        router.push("/"); // Redirect to Home (Map)
+        // Automatically redirects to the map (home) upon successful signup
+        router.push("/");
         router.refresh(); 
       } else {
         const data = await res.json();
-        setError(data.error || "Login failed");
+        setError(data.error || "Signup failed");
       }
     } catch (err) {
       setError("An unexpected error occurred.");
@@ -42,13 +44,13 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center w-16 h-16 bg-rose-100 rounded-full mx-auto items-center">
-          <Lock className="text-rose-600" size={32} />
+          <UserPlus className="text-rose-600" size={32} />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
-          Admin Portal
+          Create an Account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Sign in to manage reports and view the secure dashboard.
+          Sign up to view the map and submit reports.
         </p>
       </div>
 
@@ -62,7 +64,28 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form className="space-y-6" onSubmit={handleLogin}>
+          <form className="space-y-6" onSubmit={handleSignup}>
+            <div className="space-y-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-200 focus:border-rose-500 transition-all outline-none text-gray-900 placeholder-gray-400"
+                  placeholder="John Doe"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -79,7 +102,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-200 focus:border-rose-500 transition-all outline-none text-gray-900 placeholder-gray-400"
-                  placeholder="admin@caremap.kh"
+                  placeholder="you@example.com"
                 />
               </div>
             </div>
@@ -97,6 +120,7 @@ export default function LoginPage() {
                   name="password"
                   type="password"
                   required
+                  minLength={6}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-200 focus:border-rose-500 transition-all outline-none text-gray-900 placeholder-gray-400"
@@ -114,7 +138,7 @@ export default function LoginPage() {
                 <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <span className="flex items-center gap-2">
-                  <LogIn size={18} /> Sign in
+                  <UserPlus size={18} /> Sign Up
                 </span>
               )}
             </button>
@@ -122,9 +146,9 @@ export default function LoginPage() {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <Link href="/signup" className="font-semibold text-rose-600 hover:text-rose-500 transition-colors">
-                Sign up here
+              Already have an account?{" "}
+              <Link href="/login" className="font-semibold text-rose-600 hover:text-rose-500 transition-colors">
+                Log in here
               </Link>
             </p>
           </div>

@@ -28,11 +28,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 
-    // Check if the user is an admin
-    if (user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized: Admins only" }, { status: 403 });
-    }
-
     // Create session payload
     const sessionData = {
       userId: user.id,
