@@ -5,7 +5,7 @@ import { jwtVerify } from "jose";
 const secretKey = process.env.JWT_SECRET || "super-secret-key-for-dev-only";
 const key = new TextEncoder().encode(secretKey);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public access to authentication pages, API endpoints, and the Home page
