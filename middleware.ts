@@ -8,8 +8,9 @@ const key = new TextEncoder().encode(secretKey);
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow public access to authentication pages and API endpoints
+  // Allow public access to authentication pages, API endpoints, and the Home page
   if (
+    pathname === "/" ||
     pathname.startsWith("/login") ||
     pathname.startsWith("/signup") ||
     pathname.startsWith("/api/auth") ||

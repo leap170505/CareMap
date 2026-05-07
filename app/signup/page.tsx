@@ -26,8 +26,8 @@ export default function SignupPage() {
       });
 
       if (res.ok) {
-        // Automatically redirects to the map (home) upon successful signup
-        router.push("/");
+        // Automatically redirects to the map upon successful signup
+        router.push("/map");
         router.refresh(); 
       } else {
         const data = await res.json();

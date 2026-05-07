@@ -25,6 +25,12 @@ export default function MainMap() {
   // Center on Cambodia by default
   const defaultCenter: [number, number] = [12.5657, 104.9910];
 
+  // Bounding box for Cambodia [SouthWest, NorthEast]
+  const cambodiaBounds: [[number, number], [number, number]] = [
+    [9.9, 102.1], // SouthWest corner
+    [14.7, 107.7] // NorthEast corner
+  ];
+
   useEffect(() => {
     async function fetchReports() {
       try {
@@ -55,12 +61,16 @@ export default function MainMap() {
   }
 
   return (
-    <div className="relative w-full h-full z-0">
+    <div className="relative w-full h-[calc(100vh-64px)] z-0">
       <MapContainer
         center={defaultCenter}
         zoom={7}
+        minZoom={7}
+        maxBounds={cambodiaBounds}
+        maxBoundsViscosity={1.0}
         scrollWheelZoom={true}
         className="w-full h-full"
+        style={{ height: "100%", width: "100%" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

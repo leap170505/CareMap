@@ -25,7 +25,7 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
-        router.push("/"); // Redirect to Home (Map)
+        router.push("/map"); // Redirect to Map
         router.refresh(); 
       } else {
         const data = await res.json();
