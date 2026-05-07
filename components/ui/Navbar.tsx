@@ -17,7 +17,7 @@ export default async function Navbar() {
               CareMap KH
             </span>
           </Link>
-          
+
           <div className="hidden sm:flex items-center space-x-2">
             {!session ? (
               <>
@@ -26,7 +26,7 @@ export default async function Navbar() {
               </>
             ) : (
               <>
-                <NavLink href="/" icon={<MapPin size={18} />} label="Map" />
+                <NavLink href="/map" icon={<MapPin size={18} />} label="Map" />
                 <NavLink href="/report" icon={<ClipboardList size={18} />} label="Submit Report" />
                 {session.role === "ADMIN" && (
                   <NavLink href="/admin" icon={<ShieldCheck size={18} />} label="Admin" />

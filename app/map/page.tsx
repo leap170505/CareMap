@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 
 // Dynamically import MainMap so it only renders on the client side
