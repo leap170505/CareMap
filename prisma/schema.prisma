@@ -5,11 +5,35 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum Category {
+  FOOD
+  EDUCATION
+  HEALTHCARE
+  OTHER
+}
+
+enum Status {
+  PENDING
+  VERIFIED
+  RESOLVED
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    Category
+  latitude    Float
+  longitude   Float
+  status      Status   @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
