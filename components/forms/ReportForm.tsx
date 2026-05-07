@@ -28,7 +28,7 @@ export default function ReportForm() {
     setStatus("idle");
 
     const formData = new FormData(e.currentTarget);
-    
+
     const data = {
       title: formData.get("title"),
       description: formData.get("description"),
@@ -151,13 +151,13 @@ export default function ReportForm() {
             <MapPin size={14} className="text-rose-500" /> Location
           </label>
           <p className="text-xs text-gray-500 mb-2">Drag the pin or click "Locate Me" to set the exact location.</p>
-          <MapPicker 
-            defaultLat={latitude} 
-            defaultLng={longitude} 
+          <MapPicker
+            defaultLat={latitude}
+            defaultLng={longitude}
             onLocationSelect={(lat, lng) => {
               setLatitude(lat);
               setLongitude(lng);
-            }} 
+            }}
           />
         </div>
 

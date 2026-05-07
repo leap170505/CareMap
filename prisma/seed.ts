@@ -1,12 +1,26 @@
-import { PrismaClient, Category, Status } from '@prisma/client'
+import { PrismaClient, Category, Status, Role } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
 async function main() {
   console.log('Seeding database with initial reports...')
 
-  // Delete existing reports to avoid duplicates if run multiple times
+  // Delete existing data
   await prisma.report.deleteMany({})
+  await prisma.user.deleteMany({})
+
+  // Seed Admin User
+  const hashedPassword = await bcrypt.hash('admin123', 10)
+  await prisma.user.create({
+    data: {
+      email: 'admin@caremap.kh',
+      password: hashedPassword,
+      name: 'CareMap Admin',
+      role: Role.ADMIN,
+    },
+  })
+  console.log('Seeded admin user: admin@caremap.kh (password: admin123)')
 
   const reports = [
     {
