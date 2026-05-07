@@ -2,11 +2,25 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2, AlertCircle, MapPin } from "lucide-react";
+import dynamic from "next/dynamic";
+
+// Dynamically import MapPicker so it only renders on the client side
+// This is required because Leaflet relies on the browser 'window' object
+const MapPicker = dynamic(() => import("@/components/map/MapPicker"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[300px] bg-gray-100 animate-pulse rounded-xl flex items-center justify-center text-gray-400">
+      Loading map...
+    </div>
+  ),
+});
 
 export default function ReportForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [latitude, setLatitude] = useState(11.5564);
+  const [longitude, setLongitude] = useState(104.9282);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,14 +29,12 @@ export default function ReportForm() {
 
     const formData = new FormData(e.currentTarget);
     
-    // Simulate getting coordinates from a map picker (we'll implement real map picking later)
-    // For now, we'll use a hardcoded default or require manual entry
     const data = {
       title: formData.get("title"),
       description: formData.get("description"),
       category: formData.get("category"),
-      latitude: parseFloat(formData.get("latitude") as string) || 11.5564, // Default PP
-      longitude: parseFloat(formData.get("longitude") as string) || 104.9282,
+      latitude: latitude,
+      longitude: longitude,
     };
 
     try {
@@ -123,36 +135,19 @@ export default function ReportForm() {
           ></textarea>
         </div>
 
-        {/* Temporary coordinate inputs until we add the map picker */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="latitude" className="text-sm font-medium text-gray-700 flex items-center gap-1">
-              <MapPin size={14} className="text-rose-500" /> Latitude
-            </label>
-            <input
-              type="number"
-              step="any"
-              id="latitude"
-              name="latitude"
-              required
-              defaultValue={11.5564}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none bg-gray-50"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="longitude" className="text-sm font-medium text-gray-700 flex items-center gap-1">
-              <MapPin size={14} className="text-rose-500" /> Longitude
-            </label>
-            <input
-              type="number"
-              step="any"
-              id="longitude"
-              name="longitude"
-              required
-              defaultValue={104.9282}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none bg-gray-50"
-            />
-          </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700 flex items-center gap-1">
+            <MapPin size={14} className="text-rose-500" /> Location
+          </label>
+          <p className="text-xs text-gray-500 mb-2">Drag the pin or click "Locate Me" to set the exact location.</p>
+          <MapPicker 
+            defaultLat={latitude} 
+            defaultLng={longitude} 
+            onLocationSelect={(lat, lng) => {
+              setLatitude(lat);
+              setLongitude(lng);
+            }} 
+          />
         </div>
 
         <button
