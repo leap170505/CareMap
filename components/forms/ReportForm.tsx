@@ -117,9 +117,10 @@ export default function ReportForm() {
               id="category"
               name="category"
               required
+              defaultValue=""
               className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all outline-none appearance-none bg-white"
             >
-              <option value="" disabled selected>Select a category</option>
+              <option value="" disabled>Select a category</option>
               <option value="FOOD">Food & Water</option>
               <option value="EDUCATION">Education Supplies</option>
               <option value="HEALTHCARE">Medical & Healthcare</option>
