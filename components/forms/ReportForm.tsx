@@ -68,11 +68,21 @@ export default function ReportForm() {
       </div>
 
       {status === "success" && (
-        <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex items-start gap-3 text-emerald-700 animate-in fade-in slide-in-from-top-4">
-          <CheckCircle2 className="shrink-0 mt-0.5" size={20} />
-          <div>
-            <h4 className="font-semibold">Report Submitted</h4>
-            <p className="text-sm opacity-90 mt-1">Thank you for your submission. Our team will verify it shortly.</p>
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center animate-in zoom-in-95 duration-200">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="text-emerald-600" size={32} />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Report Submitted!</h3>
+            <p className="text-gray-600 mb-8">
+              Thank you for your submission. Our team has received your report and will verify it shortly.
+            </p>
+            <button
+              onClick={() => setStatus("idle")}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+            >
+              Submit Another Report
+            </button>
           </div>
         </div>
       )}
